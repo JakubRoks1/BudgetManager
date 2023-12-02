@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -28,6 +29,7 @@ public class Main {
                     balance();
                     break;
                 case 0:
+                    System.out.println();
                     System.out.println("Bye!");
                     scanner.close();  // Close the Scanner before exiting the program
                     return;
@@ -47,34 +49,55 @@ public class Main {
     }
 
     private static void addIncome(Scanner scanner) {
+        System.out.println();
         System.out.println("Enter income:");
         double income = scanner.nextDouble();
         totalAmount += income;
         System.out.println("Income was added!");
+        System.out.println();
     }
 
     private static void addPurchase(Scanner scanner) {
+        System.out.println();
+        scanner.nextLine();
+
         System.out.println("Enter purchase name:");
         String purchaseName = scanner.nextLine();
-        System.out.println("Enter its price:");
-        double price = scanner.nextDouble();
-        scanner.nextLine();
+
+        double price;
+        while (true) {
+            System.out.println("Enter its price:");
+            try {
+                price = Double.parseDouble(scanner.nextLine());
+                totalAmount -= price;
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+
         System.out.println("Purchase was added!");
         purchases.add(purchaseName + " $" + price);
+        System.out.println();
 
     }
 
     private static void listOfPurchases() {
-        if (purchases.isEmpty()) {
+        System.out.println();
+        if (purchases.size() > 0) {
             for (String purchase : purchases) {
                 System.out.println(purchase);
             }
+            System.out.println("Total sum: " + totalAmount);
         } else {
             System.out.println("The purchase list is empty");
         }
+        System.out.println();
     }
 
     private static void balance() {
+        System.out.println();
         System.out.println("Balance: $" + totalAmount);
+        System.out.println();
     }
 }
